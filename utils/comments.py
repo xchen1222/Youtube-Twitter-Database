@@ -11,18 +11,18 @@ def process_comments(response_items, csv_output=False):
     for res in response_items:
 
         # loop through the replies
-        if 'replies' in res.keys():
-            for reply in res['replies']['comments']:
-                comment = reply['snippet']
-                comment['commentId'] = reply['id']
-                comments.append(comment)
-        else:
-            comment = {}
-            comment['snippet'] = res['snippet']['topLevelComment']['snippet']
-            comment['snippet']['parentId'] = None
-            comment['snippet']['commentId'] = res['snippet']['topLevelComment']['id']
+        # if 'replies' in res.keys():
+        #     for reply in res['replies']['comments']:
+        #         comment = reply['snippet']
+        #         comment['commentId'] = reply['id']
+        #         comments.append(comment)
+        #else:
+        comment = {}
+        comment['snippet'] = res['snippet']['topLevelComment']['snippet']
+        comment['snippet']['parentId'] = None
+        comment['snippet']['commentId'] = res['snippet']['topLevelComment']['id']
 
-            comments.append(comment['snippet'])
+        comments.append(comment['snippet'])
 
     if csv_output:
          make_csv(comments)
