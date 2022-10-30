@@ -8,12 +8,14 @@ import os
 from dotenv import load_dotenv
 import pandas as pd
 import re
-from Mongo import *
+import urllib.parse as up
 
 from googleapiclient.discovery import build
-from utils import comments
 
+from utils import comments
 from utils.comments import process_comments, make_csv
+from Mongo import *
+
 
 load_dotenv()
 API_KEY = os.getenv('API_KEY')
@@ -53,29 +55,33 @@ def comment_threads(ChannelID, to_csv=False):
         make_csv(comments_list, ChannelID)
     
     return comments_list
-    
+
+def parseURL(URL):
+    try:
+        URL = up.urlparse(URL)
+        query = up.parse_qs(URL.query)
+        videoId = query["v"][0]
+        return videoId
+    except:
+        print("Please Enter a Valid URL")
+        return None
+        
 def main():
-    videoId = input('Enter video ID ')
+    videoLink = input('Enter Video Link ')
+    videoId = parseURL(videoLink)
     
-    print(videoId,'\n','Getting Comments')
+    if(videoId == None):
+        return 
     
-    #df = comment_threads(videoId, to_csv = True)
+    print(f'Video ID = {videoId}\n','Querying API ',  sep = '')
     
-    df = pd.DataFrame(comment_threads(videoId, to_csv = True))
-    
-    #df = pd.read_csv(f'comments_{videoId}.csv')
-    
-    #print(df)
-    
+    df = pd.DataFrame(comment_threads(videoId, to_csv = False))
     df['Sentiment'] = ''
-    df = df[['publishedAt', 'likeCount','Sentiment', 'textOriginal']]
-    #print(df)
-    
-    #df.to_csv(f'{videoId}.csv', index = False)
-    
+    df = df[['commentId','publishedAt', 'likeCount','Sentiment', 'textOriginal']]
+    df.to_csv(f'comments_{videoId}.csv', index = False)
     
     print("Finish Formatting")
-    
+
     #importCol(df , videoId)
 
 if __name__ == "__main__":
