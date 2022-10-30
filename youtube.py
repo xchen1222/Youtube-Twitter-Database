@@ -76,7 +76,7 @@ def main():
     
     print("Finish Formatting")
     
-    importCol(df , videoId)
+    #importCol(df , videoId)
 
 if __name__ == "__main__":
     main()
