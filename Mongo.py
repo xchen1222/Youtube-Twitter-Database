@@ -39,7 +39,17 @@ def lastUpdate(db,col): # When the last comment was in EST
     mydb = client[db]
     lastComment = mydb[col].find()
     
-    fTime = datetime.strptime(lastComment[0]['publishedAt'], '%Y-%m-%dT%H:%M:%S%z').astimezone(est).strftime('%m-%d-%y, %I:%M %p EST') 
+    topComment = lastComment[0]['publishedAt'] 
+    nextComment = lastComment[0]['publishedAt'] 
+    try:
+        nextComment = lastComment[1]['publishedAt']
+    except: 
+        fTime = datetime.strptime(topComment, '%Y-%m-%dT%H:%M:%S%z').astimezone(est).strftime('%m-%d-%y, %I:%M %p EST')
+        
+    if(topComment >= nextComment):
+        fTime = datetime.strptime(topComment, '%Y-%m-%dT%H:%M:%S%z').astimezone(est).strftime('%m-%d-%y, %I:%M %p EST')
+    else:
+        fTime = datetime.strptime(nextComment, '%Y-%m-%dT%H:%M:%S%z').astimezone(est).strftime('%m-%d-%y, %I:%M %p EST')
 
     return fTime
     
@@ -59,6 +69,7 @@ def existMongo(db, col):
 
 def main():
     pass
+
 
     #existMongo('Youtube', '3JTP88Jjs3o')
     #lastUpdate('Youtube', '7Uvc97PfriQ')

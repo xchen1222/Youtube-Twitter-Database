@@ -69,21 +69,33 @@ def parseURL(URL):
 def main():
     videoLink = input('Enter Video Link ')
     videoId = parseURL(videoLink)
-    
     if(videoId == None):
         return 
     
-    print(f'Video ID = {videoId}\n','Querying API ',  sep = '')
-    
-    df = pd.DataFrame(comment_threads(videoId, to_csv = False))
-    df['Sentiment'] = ''
-    df = df[['commentId','publishedAt', 'likeCount','Sentiment', 'textOriginal']]
-    df.to_csv(f'comments_{videoId}.csv', index = False)
-    
-    print("Finish Formatting")
+    if(existMongo('Youtube' , videoId)):
+        print('Last Comment On:' , lastUpdate('Youtube', videoId))
 
-    #importCol(df , videoId)
+        yesno = input("Do you want to update? Y/N \n")
+        if(yesno == 'Y' or yesno == 'y'):
+            print('Querying API ',  sep = '')
+            df = pd.DataFrame(comment_threads(videoId, to_csv = False))
+            df['Sentiment'] = ''
+            df = df[['commentId','publishedAt', 'likeCount','Sentiment', 'textOriginal']]
+            print("Finish Formatting and Updating")
+            importCol(df , videoId)
+    
+    else:
+        print('Querying API ',  sep = '')
+        df = pd.DataFrame(comment_threads(videoId, to_csv = False))
+        df['Sentiment'] = ''
+        df = df[['commentId','publishedAt', 'likeCount','Sentiment', 'textOriginal']]
+        print("Finish Formatting and Updating")
+        importCol(df , videoId)
 
+
+    
+
+    
 if __name__ == "__main__":
     main()
     
