@@ -4,13 +4,13 @@
 # See instructions for running these code samples locally:
 # https://developers.google.com/explorer-help/code-samples#python
 
-import os
-from dotenv import load_dotenv
-import pandas as pd
-import re
-import urllib.parse as up
 
+from dotenv import load_dotenv
 from googleapiclient.discovery import build
+
+import os
+import pandas as pd
+import urllib.parse as up
 
 from utils import comments
 from utils.comments import process_comments, make_csv
