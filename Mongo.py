@@ -1,11 +1,16 @@
 
+from dotenv import load_dotenv
 from datetime import datetime
+import os
 import pymongo
 import pandas as pd
 import pytz
 
 
-client = pymongo.MongoClient("mongodb+srv://Capstone6:v1hycAcrmhXSJEhs@cluster0.glm9xdw.mongodb.net/test")
+load_dotenv()
+login = os.getenv('login')
+
+client = pymongo.MongoClient(login)
 
 mydb = client["Youtube"]
 
