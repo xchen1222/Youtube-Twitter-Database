@@ -76,7 +76,7 @@ def main():
         print('Last Comment On:' , lastUpdate('Youtube', videoId))
 
         yesno = input("Do you want to update? Y/N \n")
-        if(yesno == 'Y' or yesno == 'y'):
+        if(yesno in ['Y' , 'y', 'Yes', 'yes', 'YES']):
             print('Querying API ',  sep = '')
             df = pd.DataFrame(comment_threads(videoId, to_csv = False))
             df['Sentiment'] = ''
@@ -91,7 +91,7 @@ def main():
         df = df[['commentId','publishedAt', 'likeCount','Sentiment', 'textOriginal']]
         print("Finish Formatting and Updating")
         importCol(df , videoId)
-        #aa
+
 
     
 
