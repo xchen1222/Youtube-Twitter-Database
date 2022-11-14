@@ -11,9 +11,7 @@ load_dotenv()
 login = os.getenv('login')
 
 client = pymongo.MongoClient(login)
-
 mydb = client["Youtube"]
-
 
 def importCol(df, filename):
            
@@ -63,10 +61,8 @@ def existMongo(db, col):
     mydb = client[db]
     
     if(mydb[col].find_one() != None):
-        #print('Video Found in Database\n', 'Last Comment Found on ' , lastUpdate(db,col) , sep = '')
         return True
     else:
-        #print('Video Not in Database')
         return False
     
     

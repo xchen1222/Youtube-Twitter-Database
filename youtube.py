@@ -91,7 +91,7 @@ def main():
         df = df[['commentId','publishedAt', 'likeCount','Sentiment', 'textOriginal']]
         print("Finish Formatting and Updating")
         importCol(df , videoId)
-
+        
 
     
 
