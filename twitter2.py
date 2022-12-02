@@ -20,7 +20,7 @@ client = tweepy.Client(bearer_token, consumer_key, consumer_secret, access_token
 
 # update these for the tweet you want to process replies to 'name' = the account username and you can find the tweet id within the tweet URL
 name = 'elonmusk'
-tweet_id = '1591853644944932865'
+tweet_id = '1597141451229474816'
 
 
 replies=[]
@@ -38,4 +38,4 @@ for response in tweepy.Paginator(client.search_recent_tweets,
 df = pd.DataFrame(responses_from_conversations)
 print(df)
 
-df.to_csv('something.csv', encoding= 'utf-8')
+df.to_csv('something.csv', encoding= 'utf-8', index = False)
