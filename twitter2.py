@@ -19,17 +19,24 @@ api = tweepy.API(auth, wait_on_rate_limit= True)
 client = tweepy.Client(bearer_token, consumer_key, consumer_secret, access_token,access_token_secret,wait_on_rate_limit=True)
 
 # update these for the tweet you want to process replies to 'name' = the account username and you can find the tweet id within the tweet URL
-name = 'elonmusk'
-tweet_id = '1597141451229474816'
+name = 'TeamYouTube'
+tweet_id = '1600223794295345152'
+
+# dont touch this one
+conversation_id = ''
 
 
 replies=[]
 responses_from_conversations = []
 
+tweet = client.get_tweet(id = tweet_id ,
+                          tweet_fields = 'conversation_id')
 
+conversation_id = tweet.data['conversation_id']
+ 
 for response in tweepy.Paginator(client.search_recent_tweets,
-                                query = f'conversation_id:{tweet_id} to:{name}' ,
-                                tweet_fields = 'created_at',
+                                query = f'conversation_id:{conversation_id} to:{name}' ,
+                                tweet_fields = 'created_at', 
                                 user_auth = True).flatten():  
     print(response)
     responses_from_conversations.append(response)
