@@ -2,6 +2,8 @@ import tweepy
 import pandas as pd
 import os
 from dotenv import load_dotenv
+from utils import comments
+from utils.comments import getUserIdTweetId
 # Oauth keys
 
 load_dotenv()
@@ -19,11 +21,19 @@ api = tweepy.API(auth, wait_on_rate_limit= True)
 client = tweepy.Client(bearer_token, consumer_key, consumer_secret, access_token,access_token_secret,wait_on_rate_limit=True)
 
 # update these for the tweet you want to process replies to 'name' = the account username and you can find the tweet id within the tweet URL
-name = 'TeamYouTube'
-tweet_id = '1600223794295345152'
+# name = ''
+# tweet_id = ''
 
 # dont touch this one
+name = ''
+tweet_id = ''
 conversation_id = ''
+link = ''
+
+
+link = input('link \n')
+
+name , tweet_id = getUserIdTweetId(link)
 
 
 replies=[]

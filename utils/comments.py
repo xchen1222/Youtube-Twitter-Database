@@ -1,4 +1,5 @@
 import csv
+import re
 
 #import json
 #from datetime import datetime as dt
@@ -51,3 +52,12 @@ def make_csv(comments, channelID=None):
         
 
 
+def getUserIdTweetId(link):
+  # Use a regular expression to extract the username and tweet ID from the link
+  match = re.search(r"https://twitter.com/(?P<username>\w+)/status/(?P<tweet_id>\d+)", link)
+  if match:
+    # Return the username and tweet ID
+    return (match.group("username"), match.group("tweet_id"))
+  else:
+    # If the regular expression did not match, return None
+    return None
